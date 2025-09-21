@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Microcontos: Ecos de Um Relógio — Rafael Moratti</title>
+  <meta name="author" content="Rafael Moratti">
+  <style>
+    /* -----------------------
+       Designer notes (keep in the file for reference):
+       - Grid: centered column with comfortable measure (50-75 characters).
+       - Typographic scale: big title, roomy leading, serif body for reading.
+       - Use drop caps in chapter starts, subtle animations to keep attention.
+       - Provide high-contrast theme and adjustable font-size for accessibility.
+       - Keep interactive controls minimal and in a top bar for navigation.
+       ----------------------- */
+
+    :root{
+      --max-width: 760px;
+      --accent: #7b5cff; /* subtle violet accent */
+      --muted: #6b6b6b;
+      --bg: #fbfaf8;
+      --paper: #ffffff;
+      --text: #222222;
+      --ui-radius: 12px;
+      --shadow: 0 6px 20px rgba(17,17,17,0.08);
+      --serif: "Literata", "Georgia", serif;
+      --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      --base-font: 18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg, #f6f4f2 0%, var(--bg) 100%);
+      font-family:var(--serif);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:48px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    /* Book frame */
+    .book{
+      width:100%;
+      max-width:var(--max-width);
+      background:var(--paper);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:34px 40px;
+      position:relative;
+      min-height:60vh;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      border:1px solid rgba(0,0,0,0.03);
+    }
+
+    /* Top controls */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#5ec4ff);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-family:var(--sans);box-shadow:0 6px 18px rgba(123,92,255,0.12)}
+    .meta{font-family:var(--sans);line-height:1}
+    .meta .title{font-size:1.05rem;font-weight:700}
+    .meta .author{font-size:0.82rem;color:var(--muted)}
+
+    /* Controls */
+    .controls{display:flex;gap:8px;align-items:center}
+    button.control{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:8px 12px;border-radius:10px;font-family:var(--sans);cursor:pointer}
+    button.control:hover{transform:translateY(-2px)}
+
+    /* Content area */
+    main.reader{flex:1;display:flex;gap:32px}
+    .content{flex:1;min-width:0}
+
+    /* Sidebar / TOC */
+    aside.toc{width:220px;flex-shrink:0}
+    .toc .card{background:linear-gradient(180deg,#fff, #fbfbff);border-radius:12px;padding:14px;box-shadow:0 6px 18px rgba(5,5,10,0.02)}
+    .toc h3{margin:0 0 8px 0;font-family:var(--sans);font-size:0.95rem}
+    .toc ul{margin:0;padding:0;list-style:none}
+    .toc li{padding:8px;border-radius:8px;cursor:pointer}
+    .toc li:hover{background:rgba(123,92,255,0.06)}
+    .toc li.active{background:linear-gradient(90deg, rgba(123,92,255,0.12), rgba(94,196,255,0.04));font-weight:700}
+
+    /* Typographic layout */
+    article.chapter{padding:8px 6px}
+    .chapter h1{font-size:2rem;margin:10px 0 6px 0;letter-spacing:-0.02em}
+    .chapter h2{font-size:1.1rem;color:var(--muted);margin:0 0 18px 0;font-weight:600}
+    .chapter p{font-size:var(--base-font);line-height:1.65;margin:0 0 16px 0;text-wrap:balance}
+
+    /* Drop cap for chapter first paragraph */
+    .dropcap::first-letter{
+      float:left;font-size:4.6rem;line-height:1;margin-right:10px;font-weight:700;color:var(--accent);font-family:var(--serif)
+    }
+
+    /* Small decorative rule */
+    .rule{height:1px;background:linear-gradient(90deg,transparent,var(--muted),transparent);margin:16px 0;border-radius:2px}
+
+    /* Footer / progress */
+    .progress-wrap{height:8px;background:rgba(0,0,0,0.04);border-radius:999px;overflow:hidden}
+    .progress{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#5ec4ff)}
+
+    /* Mobile adjustments */
+    @media (max-width:900px){
+      aside.toc{display:none}
+      body{padding:20px}
+      .book{padding:22px}
+      .logo{width:48px;height:48px}
+    }
+
+    /* Accessibility: focus states */
+    button:focus, .toc li:focus{outline:3px solid rgba(123,92,255,0.18);outline-offset:3px}
+
+    /* Print styles */
+    @media(print){
+      body{background:white}
+      .book{box-shadow:none;border-radius:0;padding:0}
+      aside, .topbar, .controls, .progress-wrap{display:none}
+      .chapter h1{page-break-after:avoid}
+    }
+
+    /* subtle reveal animation */
+    .fadein{opacity:0;transform:translateY(6px);transition:all 420ms cubic-bezier(.2,.9,.2,1)}
+    .fadein.visible{opacity:1;transform:none}
+
+    /* small caption style */
+    .caption{font-size:0.88rem;color:var(--muted);margin-top:6px}
+  </style>
+</head>
+<body>
+  <div class="book" role="main">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">EM</div>
+        <div class="meta">
+          <div class="title">Microcontos: Ecos de Um Relógio</div>
+          <div class="author">Autor: Rafael Moratti</div>
+        </div>
+      </div>
+      <div class="controls" aria-hidden="false">
+        <button class="control" id="decrease">A-</button>
+        <button class="control" id="increase">A+</button>
+        <button class="control" id="toggleTheme">Tema</button>
+        <button class="control" id="prev">◀ Anterior</button>
+        <button class="control" id="next">Próximo ▶</button>
+      </div>
+    </div>
+
+    <main class="reader">
+      <div class="content">
+
+        <!-- Cover / Intro -->
+        <article class="chapter fadein" id="cover">
+          <h1>Microcontos: Ecos de Um Relógio</h1>
+          <h2>Autor: Rafael Moratti</h2>
+          <p class="caption">Três microcontos reunidos em uma narrativa contínua sobre tempo, memória e silêncio.</p>
+          <div class="rule" aria-hidden="true"></div>
+          <p class="fadein">Use o índice ao lado (ou os botões / setas) para navegar entre as histórias. Ajuste o tamanho da fonte e o tema para conforto de leitura. Experimente: em trechos importantes, pequenos efeitos no relógio conduzem a frases que mudam o ritmo da leitura.</p>
+        </article>
+
+        <!-- Sumário as separate section for linear reading on mobile -->
+        <article class="chapter fadein" id="sumario">
+          <h2>Sumário</h2>
+          <ol>
+            <li><a href="#cap1">A carta sem remetente</a></li>
+            <li><a href="#cap2">Três batidas na madeira</a></li>
+            <li><a href="#cap3">O relógio que escrevia tempo</a></li>
+          </ol>
+        </article>
+
+        <!-- Chapters -->
+        <article class="chapter fadein" id="cap1">
+          <h1>1. A carta sem remetente</h1>
+          <h2>A primeira coisa que chegou naquela manhã foi o silêncio.</h2>
+          <p class="dropcap">A primeira coisa que chegou naquela manhã foi o silêncio. Depois, o envelope.</p>
+          <p>O carteiro ergueu o rosto como quem pede desculpa e disse: “Não pesa nada, mas não é leve.” Afonso — restaurador de relíquias e colecionador de ruídos antigos — recebeu a carta com as duas mãos. O papel parecia frio, como se tivesse dormido no lado escuro da cidade.</p>
+
+          <p>Dentro, apenas uma folha com uma frase:</p>
+          <blockquote>“Quando o tempo for você, devolva-me.”</blockquote>
+
+          <p>A caligrafia era inclinada, atenta, de alguém que sabe escolher as pausas. Afonso sorriu com prudência e guardou a carta na gaveta de objetos duvidosos: uma moeda com duas faces, uma pequena chave sem fechadura, um botão de casaco que nunca caiu de casaco nenhum.</p>
+
+          <p>Na parede, o relógio herdado do avô marcava 09:17. Era uma peça caprichosa, com ponteiros em forma de pena e um vidro levemente manchado, como se respirasse por dentro. A cada meia hora, soltava um suspiro — pelo menos era assim que Afonso descrevia o som aos amigos, quando ainda tinha amigos para ouvir descrições.</p>
+
+          <p>Antes do almoço, o relógio parou. 09:17 se tornou uma repetição, um eco achado. Afonso girou a chave de corda, ajeitou o pêndulo, sussurrou uma ameaça doce — nada.</p>
+
+          <p>No verso da carta, em letra menor, apareceu um rabisco que antes não estava lá:</p>
+          <blockquote>“Considere as falhas como portas.”</blockquote>
+        </article>
+
+        <article class="chapter fadein" id="cap2">
+          <h1>2. Três batidas na madeira</h1>
+          <p>Nessa noite, a casa parecia um palco abandonado. As janelas rangiam frases velhas. Afonso abriu a gaveta, retirou a carta, a chave inútil e, por impulso, o botão. Colocou os três itens sobre a mesa, ao lado do relógio paralisado.</p>
+
+          <p>Às 03:03, o silêncio foi substituído por três batidas na madeira. Não na porta, não na janela. No tampo da mesa.</p>
+
+          <p style="font-weight:700">Tok. Tok. Tok.</p>
+
+          <p>Os objetos vibraram levemente, como se tivessem lembrado um nome. A mesma caligrafia apareceu no vidro do relógio, embaçando por dentro: “Entre pelos minutos.”</p>
+
+          <p>Afonso pegou uma lupa. Entre os numerais, um delicado risco dividia o 12 e o 1, como uma costura de luz. A chave sem fechadura coube exatamente ali — um gesto improvável, a precisão dos absurdos. Quando a girou, o ponteiro dos minutos tremeu, errou o caminho que aprendera e apontou para baixo, como se indicasse um degrau.</p>
+
+          <p>A casa cheirou a poeira recente. O ar ficou espesso, e um ruído de folhas viradas preencheu a sala. Afonso viu — não com os olhos de agora, mas com a lembrança dos olhos do avô — a cena de uma oficina antiga: mãos, óleo, o relógio ainda jovem. O avô dizia: “Relógios não contam horas. Escrevem horas.”</p>
+
+          <p>A frase voltou inteira. A caligrafia no vidro acrescentou outra linha:</p>
+          <blockquote>“Se quer resposta, seja pergunta.”</blockquote>
+
+          <p>Afonso respirou o bastante para errar. E errou com capricho.</p>
+
+          <p>Encaixou o botão onde faltava um pino do pêndulo, prendeu a carta entre o vidro e o mostrador, como quem devolve um segredo à vitrine, e tocou a madeira três vezes.</p>
+
+          <p style="font-weight:700">Tok. Tok. Tok.</p>
+
+          <p>O relógio recomeçou. Não em 09:18, como seria razoável, mas em 01:00. O som do tic-tac veio com um sotaque estranho, como se tivesse aprendido a falar noutro lugar. E cada vez que o ponteiro dos minutos avançava, palavras se formavam no vidro, aparecendo e sumindo como vapor:</p>
+
+          <ul>
+            <li>“Lembre-se da sala sem janela.”</li>
+            <li>“Abandone o corredor que volta.”</li>
+            <li>“Procure o ruído que não teme o eco.”</li>
+          </ul>
+
+          <p>Afonso entendeu pouco, mas a história parecia ter decidido que ele entendeu o suficiente.</p>
+        </article>
+
+        <article class="chapter fadein" id="cap3">
+          <h1>3. O relógio que escrevia tempo</h1>
+          <p>Os dias seguintes não obedeceram aos dias. Em certas tardes, a xícara soltava vapor antes da água ferver. Em certas manhãs, a sombra da estante chegava antes da luz da janela. Às 09:17 — sempre esse número — o relógio parava por um segundo e, nesse segundo, a casa parecia ouvir-se.</p>
+
+          <p>Afonso percebeu que o relógio escrevia no vidro não apenas frases, mas direções. Ele passou a copiá-las num caderno de capa azul e a segui-las com uma disciplina de quem não confia no próprio improviso.</p>
+
+          <p>Foi assim que chegou à sala sem janela: um quarto estreito, escondido atrás da biblioteca, que ele juraria não existir. A parede tinha a textura dos livros que se recusam a acabar. No centro, uma mesa baixa, com uma gaveta aberta. Dentro, o mesmo envelope, antes de chegar, dormindo um passado intacto.</p>
+
+          <p>O papel repetia a frase: “Quando o tempo for você, devolva-me.”</p>
+
+          <p>— E como se devolve o que só me empresta? — perguntou em voz alta.</p>
+
+          <p>O relógio respondeu do corredor: três batidas na madeira, três vezes.</p>
+
+          <p style="font-weight:700">Tok. Tok. Tok.</p>
+
+          <p>A caligrafia apareceu na superfície da mesa, sem tinta, como se a madeira lembrasse o caminho do risco:</p>
+          <blockquote>“Diga o que não cabe em palavra.”</blockquote>
+
+          <p>Afonso fechou a gaveta e voltou à sala principal. O relógio marcava 07:52, embora o sol tivesse decidido ser 16:00. Ele pousou as mãos no vidro, sentiu a frieza que não era do vidro, mas do antes do vidro. E disse:</p>
+
+          <p>— Volta.</p>
+
+          <p>O ponteiro dos minutos andou para trás com elegância de peixe. As vozes do corredor pareceram desfalar-se. Um cheiro de chuva antiga visitou o tapete. O relógio escreveu:</p>
+          <blockquote>“Agora você me toca.”</blockquote>
+
+          <p>O pêndulo cessou como quem respira fundo. O tique substituiu o taque, e a casa ficou com uma metade do som. No meio dessa ausência, Afonso ouviu os passos do avô atravessando um domingo que já não existia.</p>
+
+          <p>— Você demorou — disse o avô, sem boca, sem corpo, apenas a certeza de ter dito.</p>
+
+          <p>— O tempo não deixava — respondeu Afonso, que nunca tivera talento para respostas boas.</p>
+
+          <p>— O tempo não manda. Pede.</p>
+
+          <p>A caligrafia no vidro inclinou-se outra vez:</p>
+          <blockquote>“Devolva-me quando souber pedir.”</blockquote>
+
+          <p>Afonso separou a carta do mostrador, alisou o papel com delicadeza de quem escuta com as mãos e escreveu ao lado da frase original: “Volta.” Dobrou o envelope e, sem conseguir explicar a coragem, inseriu-o outra vez no risco entre o 12 e o 1. Girou a chave.</p>
+
+          <p>O relógio apagou — não a luz, mas a evidência de si. A madeira retomou a cor de árvore viva, e os numerais se recolheram ao canto da sala, tímidos. Afonso ficou olhando um retângulo de parede onde um relógio não era mais.</p>
+
+          <p>O carteiro bateu à porta.</p>
+
+          <p>— Entrega para o senhor Afonso.</p>
+
+          <p>No envelope, seu nome, sua letra, a data de ontem. Dentro, uma folha em branco que, ao toque, ficou morna. A mão dele, sem consultar o resto, escreveu sozinha:</p>
+          <blockquote>“Quando você for o tempo, devolvo-me.”</blockquote>
+
+          <p>Assinou com uma sigla que não reconheceu. E ainda assim era sua.</p>
+
+          <p>A casa respirou. No silêncio que veio, três batidas discretas atravessaram o rodapé do mundo.</p>
+
+          <p style="font-weight:700">Tok. Tok. Tok.</p>
+
+          <p>Na mesa, o caderno de capa azul fechou-se devagar, como se alguém tivesse terminado de ler.</p>
+
+          <p>E o relógio, que já não estava, escreveu onde não havia vidro:</p>
+          <blockquote>“Continua.”</blockquote>
+        </article>
+
+        <div class="rule"></div>
+
+        <footer>
+          <p class="caption">Leitura criada para tela — o designer pode adaptar margens, colunas e ornamentação tipográfica conforme desejar. Impressão: use tipografia serif com 10–12pt para boa legibilidade em papel.</p>
+        </footer>
+
+      </div>
+
+      <aside class="toc" aria-label="Índice">
+        <div class="card">
+          <h3>Índice</h3>
+          <ul>
+            <li data-target="cover" class="active">Capa & Introdução</li>
+            <li data-target="sumario">Sumário</li>
+            <li data-target="cap1">A carta sem remetente</li>
+            <li data-target="cap2">Três batidas na madeira</li>
+            <li data-target="cap3">O relógio que escrevia tempo</li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+
+    <div class="progress-wrap" aria-hidden="true">
+      <div class="progress" id="progress"></div>
+    </div>
+  </div>
+
+  <script>
+    /* Interactive behaviors: navigation, font resize, theme toggle, progress */
+    (function(){
+      const tocItems = document.querySelectorAll('.toc li');
+      const chapters = Array.from(document.querySelectorAll('article.chapter'));
+      const progress = document.getElementById('progress');
+      const increase = document.getElementById('increase');
+      const decrease = document.getElementById('decrease');
+      const toggleTheme = document.getElementById('toggleTheme');
+      const prevBtn = document.getElementById('prev');
+      const nextBtn = document.getElementById('next');
+
+      let fontSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--base-font')) || 18;
+
+      function scrollToId(id){
+        const el = document.getElementById(id);
+        if(!el) return;
+        el.scrollIntoView({behavior:'smooth',block:'center'});
+        setActive(id);
+      }
+
+      function setActive(id){
+        tocItems.forEach(li=> li.classList.toggle('active', li.dataset.target===id));
+      }
+
+      tocItems.forEach(li=>{
+        li.addEventListener('click', ()=> scrollToId(li.dataset.target));
+        li.addEventListener('keydown', e=>{ if(e.key==='Enter') scrollToId(li.dataset.target) });
+      });
+
+      // simple visible on scroll
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting) en.target.classList.add('visible');
+        });
+      },{threshold:.12});
+      document.querySelectorAll('.fadein').forEach(n=> io.observe(n));
+
+      // progress
+      function updateProgress(){
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = window.scrollY;
+        const pct = docHeight>0 ? (scrolled/docHeight)*100 : 0;
+        progress.style.width = pct + '%';
+
+        // highlight current chapter
+        let current = chapters[0];
+        for(const ch of chapters){
+          if(ch.getBoundingClientRect().top - window.innerHeight*0.25 <= 0) current = ch;
+        }
+        setActive(current.id);
+      }
+      window.addEventListener('scroll', updateProgress);
+      window.addEventListener('resize', updateProgress);
+      updateProgress();
+
+      // font size controls
+      increase.addEventListener('click', ()=>{
+        fontSize = Math.min(22, fontSize+1);
+        document.documentElement.style.setProperty('--base-font', fontSize+'px');
+      });
+      decrease.addEventListener('click', ()=>{
+        fontSize = Math.max(14, fontSize-1);
+        document.documentElement.style.setProperty('--base-font', fontSize+'px');
+      });
+
+      // theme toggle (simple invert)
+      let dark = false;
+      toggleTheme.addEventListener('click', ()=>{
+        dark = !dark;
+        if(dark){
+          document.documentElement.style.setProperty('--bg','#0f1113');
+          document.documentElement.style.setProperty('--paper','#0b0c0d');
+          document.documentElement.style.setProperty('--text','#e6e6e6');
+          document.documentElement.style.setProperty('--muted','#bfbfbf');
+        } else {
+          document.documentElement.style.setProperty('--bg','#fbfaf8');
+          document.documentElement.style.setProperty('--paper','#ffffff');
+          document.documentElement.style.setProperty('--text','#222222');
+          document.documentElement.style.setProperty('--muted','#6b6b6b');
+        }
+      });
+
+      // prev / next
+      function goOffset(offset){
+        const ids = chapters.map(c=>c.id);
+        const activeIndex = ids.indexOf(document.querySelector('.toc li.active')?.dataset.target || ids[0]);
+        const nextIndex = Math.min(ids.length-1, Math.max(0, activeIndex+offset));
+        scrollToId(ids[nextIndex]);
+      }
+      prevBtn.addEventListener('click', ()=> goOffset(-1));
+      nextBtn.addEventListener('click', ()=> goOffset(1));
+
+      // keyboard arrows
+      window.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowRight') goOffset(1);
+        if(e.key === 'ArrowLeft') goOffset(-1);
+      });
+
+      // make links smooth on click
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', e=>{
+          e.preventDefault();
+          const id = a.getAttribute('href').slice(1);
+          scrollToId(id);
+        });
+      });
+
+      // small UX: tap on logo returns to cover
+      document.querySelector('.logo').addEventListener('click', ()=> scrollToId('cover'));
+
+      // expose small API for designers/devs to tweak
+      window.__ebook = {scrollToId, setFontSize: (n)=>{fontSize=n;document.documentElement.style.setProperty('--base-font',n+'px')}};
+    })();
+  </script>
+</body>
+</html>
