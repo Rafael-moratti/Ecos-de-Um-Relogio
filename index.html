@@ -8,7 +8,7 @@
     body {
       margin: 0;
       font-family: "Merriweather", serif;
-      background: #f8f8f8;
+      background: #f2f2f2;
       color: #222;
       display: flex;
       flex-direction: column;
@@ -17,11 +17,12 @@
     }
 
     main {
-      max-width: 800px;
+      width: 100%;
+      max-width: 900px;
       padding: 20px;
     }
 
-    h1, h2, h3 {
+    h1, h2 {
       text-align: center;
       font-family: "Playfair Display", serif;
     }
@@ -59,6 +60,10 @@
     .capitulo {
       display: none;
       animation: fade 0.6s ease-in-out;
+      background: rgba(245, 236, 220, 0.9); /* bege suave translúcido */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
     }
     .capitulo.ativo {
       display: block;
@@ -226,6 +231,7 @@
       capitulos.forEach(c => c.classList.remove('ativo'));
       capitulos[n].classList.add('ativo');
       indice = n;
+      window.scrollTo({ top: 0, behavior: "smooth" }); // sempre volta pro topo
     }
 
     document.body.addEventListener('click', e => {
