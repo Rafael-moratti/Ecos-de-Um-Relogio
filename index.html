@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Treino Full Body</title>
     <style>
         * {
@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
             padding: 15px 10px;
+            overflow-x: hidden;
         }
 
         .header {
@@ -65,6 +66,7 @@
             font-weight: bold;
             margin-right: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            flex-shrink: 0;
         }
 
         .day-info h2 {
@@ -83,31 +85,39 @@
             overflow: hidden;
             border-radius: 12px;
             background: #f8f9fa;
+            width: 100%;
         }
 
         .carousel {
             display: flex;
-            transition: transform 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
         }
 
         .exercise-card {
             min-width: 100%;
+            width: 100%;
             padding: 15px;
             flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
         }
 
         .exercise-image {
             width: 100%;
-            height: 220px;
+            max-width: 100%;
+            height: 240px;
             border-radius: 10px;
             margin-bottom: 12px;
             object-fit: cover;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            display: block;
         }
 
         .exercise-icon {
             width: 100%;
-            height: 220px;
+            max-width: 100%;
+            height: 240px;
             border-radius: 10px;
             margin-bottom: 12px;
             display: flex;
@@ -115,7 +125,7 @@
             justify-content: center;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            font-size: 3em;
+            font-size: 4em;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
         
@@ -123,40 +133,41 @@
             display: inline-block;
             background: #2a5298;
             color: white;
-            padding: 4px 12px;
+            padding: 5px 14px;
             border-radius: 15px;
             font-size: 0.75em;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .exercise-name {
-            font-size: 1.3em;
+            font-size: 1.35em;
             color: #1e3c72;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-weight: 700;
+            line-height: 1.3;
         }
 
         .exercise-details {
             background: white;
-            padding: 12px;
+            padding: 14px;
             border-radius: 8px;
             border-left: 4px solid #2a5298;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .sets-reps {
-            font-size: 1.1em;
+            font-size: 1.15em;
             color: #333;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .exercise-notes {
             color: #555;
-            line-height: 1.5;
+            line-height: 1.6;
             font-size: 0.95em;
         }
 
@@ -172,7 +183,7 @@
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 22px;
             border-radius: 25px;
             cursor: pointer;
             font-size: 0.95em;
@@ -180,10 +191,13 @@
             transition: all 0.3s;
             box-shadow: 0 4px 12px rgba(30, 60, 114, 0.4);
             flex: 1;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .control-btn:active {
             transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(30, 60, 114, 0.4);
         }
 
         .indicators {
@@ -192,6 +206,7 @@
             gap: 8px;
             margin-top: 12px;
             padding: 10px 0;
+            flex-wrap: wrap;
         }
 
         .indicator {
@@ -201,6 +216,7 @@
             background: #ddd;
             cursor: pointer;
             transition: all 0.3s;
+            flex-shrink: 0;
         }
 
         .indicator.active {
@@ -212,9 +228,59 @@
         .progress-text {
             text-align: center;
             color: #666;
-            font-size: 0.85em;
+            font-size: 0.9em;
             margin-top: 8px;
             font-weight: 600;
+        }
+
+        /* Previne o scroll horizontal */
+        html, body {
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Melhora o toque em dispositivos móveis */
+        @media (hover: none) and (pointer: coarse) {
+            .control-btn {
+                padding: 16px 24px;
+            }
+        }
+
+        /* Ajustes para telas muito pequenas */
+        @media (max-width: 360px) {
+            .header h1 {
+                font-size: 1.4em;
+            }
+            
+            .exercise-image,
+            .exercise-icon {
+                height: 200px;
+            }
+            
+            .day-number {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2em;
+            }
+        }
+
+        /* Ajustes para telas maiores */
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .day-section {
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 25px;
+            }
+
+            .exercise-image,
+            .exercise-icon {
+                height: 300px;
+            }
         }
     </style>
 </head>
@@ -238,7 +304,8 @@
             <div class="carousel" id="carousel-seg">
                 <!-- Supino -->
                 <div class="exercise-card">
-                    <img src="imagem/supino.gif" alt="Supino" class="exercise-image">
+                    <img src="imagem/supino.gif" alt="Supino" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">🏋️</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Supino com Elástico</div>
                     <div class="exercise-details">
@@ -251,7 +318,8 @@
                 </div>
                 <!-- Crucifixo -->
                 <div class="exercise-card">
-                    <img src="imagem/Crucifixo.gif" alt="Crucifixo" class="exercise-image">
+                    <img src="imagem/Crucifixo.gif" alt="Crucifixo" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">🦅</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Crucifixo com Elástico</div>
                     <div class="exercise-details">
@@ -263,7 +331,8 @@
                 </div>
                 <!-- Flexão -->
                 <div class="exercise-card">
-                    <img src="imagem/flexaodeclinado.gif" alt="Flexão Declinada" class="exercise-image">
+                    <img src="imagem/flexaodeclinado.gif" alt="Flexão Declinada" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">💥</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Flexão Declinada</div>
                     <div class="exercise-details">
@@ -275,7 +344,8 @@
                 </div>
                 <!-- Remada Curvada -->
                 <div class="exercise-card">
-                    <img src="imagem/remadacurva.jpg" alt="Remada Curvada" class="exercise-image">
+                    <img src="imagem/remadacurva.jpg" alt="Remada Curvada" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">🚣</div>
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Remada Curvada</div>
                     <div class="exercise-details">
@@ -287,7 +357,8 @@
                 </div>
                 <!-- Pulldown -->
                 <div class="exercise-card">
-                    <img src="imagem/pulldown.gif" alt="Pulldown" class="exercise-image">
+                    <img src="imagem/pulldown.gif" alt="Pulldown" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">⬇️</div>
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Pulldown com Elástico</div>
                     <div class="exercise-details">
@@ -299,7 +370,8 @@
                 </div>
                 <!-- Desenvolvimento -->
                 <div class="exercise-card">
-                    <img src="imagem/desenvolvimento.gif" alt="Desenvolvimento" class="exercise-image">
+                    <img src="imagem/desenvolvimento.gif" alt="Desenvolvimento" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">💪</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Desenvolvimento</div>
                     <div class="exercise-details">
@@ -311,7 +383,8 @@
                 </div>
                 <!-- Elevação Lateral -->
                 <div class="exercise-card">
-                    <img src="imagem/elevacaolateral.gif" alt="Elevação Lateral" class="exercise-image">
+                    <img src="imagem/elevacaolateral.gif" alt="Elevação Lateral" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">↔️</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Elevação Lateral</div>
                     <div class="exercise-details">
@@ -324,7 +397,8 @@
                 </div>
                 <!-- Agachamento -->
                 <div class="exercise-card">
-                    <img src="imagem/agachamentocomelastico.gif" alt="Agachamento" class="exercise-image">
+                    <img src="imagem/agachamentocomelastico.gif" alt="Agachamento" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">🦵</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Agachamento</div>
                     <div class="exercise-details">
@@ -336,7 +410,8 @@
                 </div>
                 <!-- Afundo -->
                 <div class="exercise-card">
-                    <img src="imagem/afundo.webp" alt="Afundo" class="exercise-image">
+                    <img src="imagem/afundo.webp" alt="Afundo" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">🚶</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Afundo Caminhando</div>
                     <div class="exercise-details">
@@ -348,7 +423,8 @@
                 </div>
                 <!-- Elevação Quadril -->
                 <div class="exercise-card">
-                    <img src="imagem/Elevação.gif" alt="Elevação de Quadril" class="exercise-image">
+                    <img src="imagem/Elevação.gif" alt="Elevação de Quadril" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">🍑</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Elevação de Quadril</div>
                     <div class="exercise-details">
@@ -361,7 +437,8 @@
                 </div>
                 <!-- Roda Abdominal -->
                 <div class="exercise-card">
-                    <img src="imagem/roda.jpg" alt="Roda Abdominal" class="exercise-image">
+                    <img src="imagem/roda.jpg" alt="Roda Abdominal" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">⚙️</div>
                     <span class="muscle-group">ABDÔMEN</span>
                     <div class="exercise-name">Roda Abdominal</div>
                     <div class="exercise-details">
@@ -373,7 +450,8 @@
                 </div>
                 <!-- Prancha -->
                 <div class="exercise-card">
-                    <img src="imagem/prancha.jpg" alt="Prancha" class="exercise-image">
+                    <img src="imagem/prancha.jpg" alt="Prancha" class="exercise-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="exercise-icon" style="display:none;">📏</div>
                     <span class="muscle-group">ABDÔMEN</span>
                     <div class="exercise-name">Prancha com Mini Band</div>
                     <div class="exercise-details">
@@ -1055,6 +1133,37 @@
             
             document.getElementById(`progress-${day}`).textContent = 
                 `${carousels[day].current + 1} de ${carousels[day].total}`;
+        }
+
+        // Suporte para gestos de deslize (swipe)
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.querySelectorAll('.carousel-container').forEach((container, index) => {
+            const days = ['seg', 'qua', 'sex', 'sab'];
+            const day = days[index];
+            
+            container.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            
+            container.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe(day);
+            }, { passive: true });
+        });
+        
+        function handleSwipe(day) {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    moveCarousel(day, 1);
+                } else {
+                    moveCarousel(day, -1);
+                }
+            }
         }
 
         initCarousels();
