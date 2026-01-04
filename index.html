@@ -95,21 +95,25 @@
             padding: 15px;
         }
 
-        .exercise-image {
+        .exercise-image icon {
             width: 100%;
             height: 220px;
-            object-fit: cover;
             border-radius: 10px;
             margin-bottom: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3em;
+            object-fit: cover;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
+        /* Somente para os ícones */
+        .exercise-image icon.icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 3em;
+        }
+        
         .muscle-group {
             display: inline-block;
             background: #2a5298;
@@ -229,7 +233,7 @@
             <div class="carousel" id="carousel-seg">
                 <!-- Supino -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🏋️</div>
+                    <div class="exercise-image icon">🏋️</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Supino com Elástico</div>
                     <div class="exercise-details">
@@ -242,7 +246,7 @@
                 </div>
                 <!-- Crucifixo -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🦅</div>
+                    <div class="exercise-image icon">🦅</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Crucifixo com Elástico</div>
                     <div class="exercise-details">
@@ -254,7 +258,7 @@
                 </div>
                 <!-- Flexão -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⬇️</div>
+                    <div class="exercise-image icon">⬇️</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Flexão Declinada</div>
                     <div class="exercise-details">
@@ -266,7 +270,9 @@
                 </div>
                 <!-- Remada Curvada -->
                 <div class="exercise-card">
-                    <img src="imagem/remadacurva.jpg" class="exercise-image">
+                    <img src="imagem/remadacurva.jpg" 
+                      alt="Exercício Remada Curvada" 
+                      class="exercise-image">
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Remada Curvada</div>
                     <div class="exercise-details">
@@ -278,7 +284,7 @@
                 </div>
                 <!-- Pulldown -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⬇️</div>
+                    <div class="exercise-image icon">⬇️</div>
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Pulldown com Elástico</div>
                     <div class="exercise-details">
@@ -290,7 +296,7 @@
                 </div>
                 <!-- Desenvolvimento -->
                 <div class="exercise-card">
-                    <div class="exercise-image">💪</div>
+                    <div class="exercise-image icon">💪</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Desenvolvimento</div>
                     <div class="exercise-details">
@@ -302,7 +308,7 @@
                 </div>
                 <!-- Elevação Lateral -->
                 <div class="exercise-card">
-                    <div class="exercise-image">↔️</div>
+                    <div class="exercise-image icon">↔️</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Elevação Lateral</div>
                     <div class="exercise-details">
@@ -315,7 +321,7 @@
                 </div>
                 <!-- Agachamento -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🦵</div>
+                    <div class="exercise-image icon">🦵</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Agachamento</div>
                     <div class="exercise-details">
@@ -327,7 +333,7 @@
                 </div>
                 <!-- Afundo -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🚶</div>
+                    <div class="exercise-image icon">🚶</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Afundo Caminhando</div>
                     <div class="exercise-details">
@@ -339,7 +345,7 @@
                 </div>
                 <!-- Elevação Quadril -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🍑</div>
+                    <div class="exercise-image icon">🍑</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Elevação de Quadril</div>
                     <div class="exercise-details">
@@ -352,7 +358,7 @@
                 </div>
                 <!-- Roda Abdominal -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⚙️</div>
+                    <div class="exercise-image icon">⚙️</div>
                     <span class="muscle-group">ABDÔMEN</span>
                     <div class="exercise-name">Roda Abdominal</div>
                     <div class="exercise-details">
@@ -364,7 +370,7 @@
                 </div>
                 <!-- Prancha -->
                 <div class="exercise-card">
-                    <div class="exercise-image">📏</div>
+                    <div class="exercise-image icon">📏</div>
                     <span class="muscle-group">ABDÔMEN</span>
                     <div class="exercise-name">Prancha com Mini Band</div>
                     <div class="exercise-details">
@@ -397,7 +403,7 @@
             <div class="carousel" id="carousel-qua">
                 <!-- Pulldown -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⬇️</div>
+                    <div class="exercise-image icon">⬇️</div>
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Pulldown com Elástico</div>
                     <div class="exercise-details">
@@ -409,7 +415,7 @@
                 </div>
                 <!-- Remada Alta -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⬆️</div>
+                    <div class="exercise-image icon">⬆️</div>
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Remada Alta</div>
                     <div class="exercise-details">
@@ -421,7 +427,7 @@
                 </div>
                 <!-- Remada Unilateral -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🔄</div>
+                    <div class="exercise-image icon">🔄</div>
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Remada Unilateral</div>
                     <div class="exercise-details">
@@ -433,7 +439,7 @@
                 </div>
                 <!-- Pullover -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🔽</div>
+                    <div class="exercise-image icon">🔽</div>
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Pullover</div>
                     <div class="exercise-details">
@@ -445,7 +451,7 @@
                 </div>
                 <!-- Supino Inclinado -->
                 <div class="exercise-card">
-                    <div class="exercise-image">📐</div>
+                    <div class="exercise-image icon">📐</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Supino Inclinado</div>
                     <div class="exercise-details">
@@ -457,7 +463,7 @@
                 </div>
                 <!-- Flexão Mini Band -->
                 <div class="exercise-card">
-                    <div class="exercise-image">💥</div>
+                    <div class="exercise-image icon">💥</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Flexão com Mini Band</div>
                     <div class="exercise-details">
@@ -469,7 +475,7 @@
                 </div>
                 <!-- Elevação Lateral -->
                 <div class="exercise-card">
-                    <div class="exercise-image">↔️</div>
+                    <div class="exercise-image icon">↔️</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Elevação Lateral</div>
                     <div class="exercise-details">
@@ -481,7 +487,7 @@
                 </div>
                 <!-- Crucifixo Inverso -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🔙</div>
+                    <div class="exercise-image icon">🔙</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Crucifixo Inverso</div>
                     <div class="exercise-details">
@@ -493,7 +499,7 @@
                 </div>
                 <!-- Stiff -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🏋️</div>
+                    <div class="exercise-image icon">🏋️</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Stiff</div>
                     <div class="exercise-details">
@@ -505,7 +511,7 @@
                 </div>
                 <!-- Agachamento Sumô -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🦵</div>
+                    <div class="exercise-image icon">🦵</div>
                     <span class="muscle-group">GLÚTEOS</span>
                     <div class="exercise-name">Agachamento Sumô</div>
                     <div class="exercise-details">
@@ -517,7 +523,7 @@
                 </div>
                 <!-- Abdução Lateral -->
                 <div class="exercise-card">
-                    <div class="exercise-image">➡️</div>
+                    <div class="exercise-image icon">➡️</div>
                     <span class="muscle-group">GLÚTEOS</span>
                     <div class="exercise-name">Abdução Lateral</div>
                     <div class="exercise-details">
@@ -529,7 +535,7 @@
                 </div>
                 <!-- Coice -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🦵</div>
+                    <div class="exercise-image icon">🦵</div>
                     <span class="muscle-group">GLÚTEOS</span>
                     <div class="exercise-name">Coice</div>
                     <div class="exercise-details">
@@ -542,7 +548,7 @@
                 </div>
                 <!-- Abdominal Bicicleta -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🚴</div>
+                    <div class="exercise-image icon">🚴</div>
                     <span class="muscle-group">ABDÔMEN</span>
                     <div class="exercise-name">Abdominal Bicicleta</div>
                     <div class="exercise-details">
@@ -554,7 +560,7 @@
                 </div>
                 <!-- Abdominal Canivete -->
                 <div class="exercise-card">
-                    <div class="exercise-image">✂️</div>
+                    <div class="exercise-image icon">✂️</div>
                     <span class="muscle-group">ABDÔMEN</span>
                     <div class="exercise-name">Abdominal Canivete</div>
                     <div class="exercise-details">
@@ -588,7 +594,7 @@
             <div class="carousel" id="carousel-sex">
                 <!-- Desenvolvimento -->
                 <div class="exercise-card">
-                    <div class="exercise-image">💪</div>
+                    <div class="exercise-image icon">💪</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Desenvolvimento</div>
                     <div class="exercise-details">
@@ -600,7 +606,7 @@
                 </div>
                 <!-- Elevação Lateral -->
                 <div class="exercise-card">
-                    <div class="exercise-image">↔️</div>
+                    <div class="exercise-image icon">↔️</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Elevação Lateral</div>
                     <div class="exercise-details">
@@ -612,7 +618,7 @@
                 </div>
                 <!-- Elevação Frontal -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⬆️</div>
+                    <div class="exercise-image icon">⬆️</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Elevação Frontal Alternada</div>
                     <div class="exercise-details">
@@ -624,7 +630,7 @@
                 </div>
                 <!-- Remada Alta -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⬆️</div>
+                    <div class="exercise-image icon">⬆️</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Remada Alta</div>
                     <div class="exercise-details">
@@ -636,7 +642,7 @@
                 </div>
                 <!-- Supino -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🏋️</div>
+                    <div class="exercise-image icon">🏋️</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Supino com Elástico</div>
                     <div class="exercise-details">
@@ -648,7 +654,7 @@
                 </div>
                 <!-- Crucifixo -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🦅</div>
+                    <div class="exercise-image icon">🦅</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Crucifixo</div>
                     <div class="exercise-details">
@@ -660,7 +666,7 @@
                 </div>
                 <!-- Remada Curvada -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🚣</div>
+                    <div class="exercise-image icon">🚣</div>
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Remada Curvada</div>
                     <div class="exercise-details">
@@ -672,7 +678,7 @@
                 </div>
                 <!-- Pulldown -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⬇️</div>
+                    <div class="exercise-image icon">⬇️</div>
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Pulldown</div>
                     <div class="exercise-details">
@@ -684,7 +690,7 @@
                 </div>
                 <!-- Elevação Quadril -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🍑</div>
+                    <div class="exercise-image icon">🍑</div>
                     <span class="muscle-group">GLÚTEOS</span>
                     <div class="exercise-name">Elevação de Quadril</div>
                     <div class="exercise-details">
@@ -697,7 +703,7 @@
                 </div>
                 <!-- Agachamento Búlgaro -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🦵</div>
+                    <div class="exercise-image icon">🦵</div>
                     <span class="muscle-group">GLÚTEOS</span>
                     <div class="exercise-name">Agachamento Búlgaro</div>
                     <div class="exercise-details">
@@ -709,7 +715,7 @@
                 </div>
                 <!-- Coice Glúteo -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🦵</div>
+                    <div class="exercise-image icon">🦵</div>
                     <span class="muscle-group">GLÚTEOS</span>
                     <div class="exercise-name">Coice de Glúteo</div>
                     <div class="exercise-details">
@@ -721,7 +727,7 @@
                 </div>
                 <!-- Agachamento Mini Band -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🦵</div>
+                    <div class="exercise-image icon">🦵</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Agachamento</div>
                     <div class="exercise-details">
@@ -733,7 +739,7 @@
                 </div>
                 <!-- Abdução Deitado -->
                 <div class="exercise-card">
-                    <div class="exercise-image">↔️</div>
+                    <div class="exercise-image icon">↔️</div>
                     <span class="muscle-group">GLÚTEOS</span>
                     <div class="exercise-name">Abdução Deitado</div>
                     <div class="exercise-details">
@@ -745,7 +751,7 @@
                 </div>
                 <!-- Roda Abdominal -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⚙️</div>
+                    <div class="exercise-image icon">⚙️</div>
                     <span class="muscle-group">ABDÔMEN</span>
                     <div class="exercise-name">Roda Abdominal</div>
                     <div class="exercise-details">
@@ -778,7 +784,7 @@
             <div class="carousel" id="carousel-sab">
                 <!-- Rosca Direta -->
                 <div class="exercise-card">
-                    <div class="exercise-image">💪</div>
+                    <div class="exercise-image icon">💪</div>
                     <span class="muscle-group">BRAÇOS</span>
                     <div class="exercise-name">Rosca Direta</div>
                     <div class="exercise-details">
@@ -790,7 +796,7 @@
                 </div>
                 <!-- Tríceps Testa -->
                 <div class="exercise-card">
-                    <div class="exercise-image">💪</div>
+                    <div class="exercise-image icon">💪</div>
                     <span class="muscle-group">BRAÇOS</span>
                     <div class="exercise-name">Tríceps Testa</div>
                     <div class="exercise-details">
@@ -802,7 +808,7 @@
                 </div>
                 <!-- Rosca Martelo -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🔨</div>
+                    <div class="exercise-image icon">🔨</div>
                     <span class="muscle-group">BRAÇOS</span>
                     <div class="exercise-name">Rosca Martelo</div>
                     <div class="exercise-details">
@@ -814,7 +820,7 @@
                 </div>
                 <!-- Tríceps Kickback -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🔙</div>
+                    <div class="exercise-image icon">🔙</div>
                     <span class="muscle-group">BRAÇOS</span>
                     <div class="exercise-name">Tríceps Kickback</div>
                     <div class="exercise-details">
@@ -826,7 +832,7 @@
                 </div>
                 <!-- Rosca Concentrada -->
                 <div class="exercise-card">
-                    <div class="exercise-image">💪</div>
+                    <div class="exercise-image icon">💪</div>
                     <span class="muscle-group">BRAÇOS</span>
                     <div class="exercise-name">Rosca Concentrada</div>
                     <div class="exercise-details">
@@ -839,7 +845,7 @@
                 </div>
                 <!-- Flexão Explosiva -->
                 <div class="exercise-card">
-                    <div class="exercise-image">💥</div>
+                    <div class="exercise-image icon">💥</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Flexão Explosiva</div>
                     <div class="exercise-details">
@@ -851,7 +857,7 @@
                 </div>
                 <!-- Crucifixo -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🦅</div>
+                    <div class="exercise-image icon">🦅</div>
                     <span class="muscle-group">PEITO</span>
                     <div class="exercise-name">Crucifixo</div>
                     <div class="exercise-details">
@@ -863,7 +869,7 @@
                 </div>
                 <!-- Remada Alta -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⬆️</div>
+                    <div class="exercise-image icon">⬆️</div>
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Remada Alta</div>
                     <div class="exercise-details">
@@ -875,7 +881,7 @@
                 </div>
                 <!-- Pulldown -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⬇️</div>
+                    <div class="exercise-image icon">⬇️</div>
                     <span class="muscle-group">COSTAS</span>
                     <div class="exercise-name">Pulldown</div>
                     <div class="exercise-details">
@@ -887,7 +893,7 @@
                 </div>
                 <!-- Elevação Lateral -->
                 <div class="exercise-card">
-                    <div class="exercise-image">↔️</div>
+                    <div class="exercise-image icon">↔️</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Elevação Lateral</div>
                     <div class="exercise-details">
@@ -899,7 +905,7 @@
                 </div>
                 <!-- Desenvolvimento -->
                 <div class="exercise-card">
-                    <div class="exercise-image">💪</div>
+                    <div class="exercise-image icon">💪</div>
                     <span class="muscle-group">OMBROS</span>
                     <div class="exercise-name">Desenvolvimento</div>
                     <div class="exercise-details">
@@ -911,7 +917,7 @@
                 </div>
                 <!-- Agachamento -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🦵</div>
+                    <div class="exercise-image icon">🦵</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Agachamento</div>
                     <div class="exercise-details">
@@ -923,7 +929,7 @@
                 </div>
                 <!-- Afundo Reverso -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🚶</div>
+                    <div class="exercise-image icon">🚶</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Afundo Reverso</div>
                     <div class="exercise-details">
@@ -935,7 +941,7 @@
                 </div>
                 <!-- Agachamento Sumô -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🦵</div>
+                    <div class="exercise-image icon">🦵</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Agachamento Sumô</div>
                     <div class="exercise-details">
@@ -947,7 +953,7 @@
                 </div>
                 <!-- Elevação Quadril -->
                 <div class="exercise-card">
-                    <div class="exercise-image">🍑</div>
+                    <div class="exercise-image icon">🍑</div>
                     <span class="muscle-group">PERNAS</span>
                     <div class="exercise-name">Elevação de Quadril</div>
                     <div class="exercise-details">
@@ -959,7 +965,7 @@
                 </div>
                 <!-- Prancha Movimentos -->
                 <div class="exercise-card">
-                    <div class="exercise-image">📏</div>
+                    <div class="exercise-image icon">📏</div>
                     <span class="muscle-group">ABDÔMEN</span>
                     <div class="exercise-name">Prancha com Movimentos</div>
                     <div class="exercise-details">
@@ -971,7 +977,7 @@
                 </div>
                 <!-- Mountain Climbers -->
                 <div class="exercise-card">
-                    <div class="exercise-image">⛰️</div>
+                    <div class="exercise-image icon">⛰️</div>
                     <span class="muscle-group">ABDÔMEN</span>
                     <div class="exercise-name">Mountain Climbers</div>
                     <div class="exercise-details">
