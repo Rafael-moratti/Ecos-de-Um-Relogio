@@ -1,257 +1,1057 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Microcontos: Ecos de Um Relógio</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Merriweather", serif;
-      background: #f2f2f2;
-      color: #222;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      line-height: 1.6;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treino Full Body</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    main {
-      width: 100%;
-      max-width: 900px;
-      padding: 20px;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 15px 10px;
+        }
 
-    h1, h2 {
-      text-align: center;
-      font-family: "Playfair Display", serif;
-    }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 25px;
+            padding: 15px;
+        }
 
-    .capa {
-      text-align: center;
-    }
-    .capa img {
-      max-width: 300px;
-      margin-top: 20px;
-    }
-    .capa h1 {
-      margin: 20px 0 0;
-    }
-    .capa p {
-      font-style: italic;
-      color: #555;
-    }
+        .header h1 {
+            font-size: 1.6em;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-    .sumario ul {
-      list-style: none;
-      padding: 0;
-      text-align: center;
-    }
-    .sumario li {
-      margin: 5px 0;
-      cursor: pointer;
-      color: #004466;
-      font-weight: bold;
-    }
-    .sumario li:hover {
-      text-decoration: underline;
-    }
+        .header p {
+            font-size: 0.9em;
+            opacity: 0.95;
+        }
 
-    .capitulo {
-      display: none;
-      animation: fade 0.6s ease-in-out;
-      background: rgba(245, 236, 220, 0.9); /* bege suave translúcido */
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.05);
-    }
-    .capitulo.ativo {
-      display: block;
-    }
+        .day-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
 
-    @keyframes fade {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .day-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #2a5298;
+        }
 
-    .navegacao {
-      margin: 20px 0;
-      display: flex;
-      justify-content: space-between;
-    }
+        .day-number {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-right: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
 
-    button {
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-      background: #004466;
-      color: white;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    button:hover:not(:disabled) {
-      background: #006699;
-    }
+        .day-info h2 {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 3px;
+        }
 
-    .continua {
-      text-align: center;
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #aa0000;
-      opacity: 0;
-      animation: pisca 2s infinite alternate;
-    }
+        .day-info p {
+            font-size: 0.85em;
+            color: #666;
+        }
 
-    @keyframes pisca {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-  </style>
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #f8f9fa;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.4s ease;
+        }
+
+        .exercise-card {
+            min-width: 100%;
+            padding: 15px;
+        }
+
+        .exercise-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .muscle-group {
+            display: inline-block;
+            background: #2a5298;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .exercise-name {
+            font-size: 1.3em;
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .exercise-details {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #2a5298;
+            margin-bottom: 8px;
+        }
+
+        .sets-reps {
+            font-size: 1.1em;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .exercise-notes {
+            color: #555;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 15px;
+            padding: 0 5px;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(30, 60, 114, 0.4);
+            flex: 1;
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 10px 0;
+        }
+
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .indicator.active {
+            background: #2a5298;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-  <main>
-    <!-- CAPA -->
-    <section class="capa capitulo ativo">
-      <img src="imagem/time.png" alt="Capa do livro">
-      <h1>Microcontos: Ecos de Um Relógio</h1>
-      <p>Autor: Rafael Moratti</p>
-      <div class="navegacao">
-        <button id="next">Iniciar</button>
-      </div>
-    </section>
+    <div class="header">
+        <h1>💪 Treino Full Body</h1>
+        <p>Hipertrofia Moderada/Intensa</p>
+        <p>4x semana | 60-75 min/sessão</p>
+    </div>
 
-    <!-- SUMÁRIO -->
-    <section class="sumario capitulo">
-      <h2>Sumário</h2>
-      <ul>
-        <li data-capitulo="2">1. A carta sem remetente</li>
-        <li data-capitulo="3">2. Três batidas na madeira</li>
-        <li data-capitulo="4">3. O relógio que escrevia tempo</li>
-      </ul>
-      <div class="navegacao">
-        <button id="prev">Voltar</button>
-        <button id="next">Continuar</button>
-      </div>
-    </section>
+    <!-- SEGUNDA-FEIRA -->
+    <div class="day-section">
+        <div class="day-header">
+            <div class="day-number">SEG</div>
+            <div class="day-info">
+                <h2>Segunda-Feira</h2>
+                <p>Ênfase: Peitoral/Quadríceps</p>
+            </div>
+        </div>
+        <div class="carousel-container">
+            <div class="carousel" id="carousel-seg">
+                <!-- Supino -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🏋️</div>
+                    <span class="muscle-group">PEITO</span>
+                    <div class="exercise-name">Supino com Elástico</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x10-12</div>
+                        <div class="exercise-notes">
+                            Faixa preta + azul combinadas<br>
+                            Tempo: 2seg descida, 1seg subida
+                        </div>
+                    </div>
+                </div>
+                <!-- Crucifixo -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🦅</div>
+                    <span class="muscle-group">PEITO</span>
+                    <div class="exercise-name">Crucifixo com Elástico</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12-15</div>
+                        <div class="exercise-notes">
+                            Apertar no topo por 1 segundo
+                        </div>
+                    </div>
+                </div>
+                <!-- Flexão -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⬇️</div>
+                    <span class="muscle-group">PEITO</span>
+                    <div class="exercise-name">Flexão Declinada</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x até falha</div>
+                        <div class="exercise-notes">
+                            Pés elevados com mini band
+                        </div>
+                    </div>
+                </div>
+                <!-- Remada Curvada -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🚣</div>
+                    <span class="muscle-group">COSTAS</span>
+                    <div class="exercise-name">Remada Curvada</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x10-12</div>
+                        <div class="exercise-notes">
+                            Faixa preta - pise firme no elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Pulldown -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⬇️</div>
+                    <span class="muscle-group">COSTAS</span>
+                    <div class="exercise-name">Pulldown com Elástico</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12-15</div>
+                        <div class="exercise-notes">
+                            Elástico fixado alto
+                        </div>
+                    </div>
+                </div>
+                <!-- Desenvolvimento -->
+                <div class="exercise-card">
+                    <div class="exercise-image">💪</div>
+                    <span class="muscle-group">OMBROS</span>
+                    <div class="exercise-name">Desenvolvimento</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12-15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Elevação Lateral -->
+                <div class="exercise-card">
+                    <div class="exercise-image">↔️</div>
+                    <span class="muscle-group">OMBROS</span>
+                    <div class="exercise-name">Elevação Lateral</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15</div>
+                        <div class="exercise-notes">
+                            Última série: drop set<br>
+                            Troque para faixa mais leve + 10 reps
+                        </div>
+                    </div>
+                </div>
+                <!-- Agachamento -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🦵</div>
+                    <span class="muscle-group">PERNAS</span>
+                    <div class="exercise-name">Agachamento</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x12-15</div>
+                        <div class="exercise-notes">
+                            Com elástico - faixa preta
+                        </div>
+                    </div>
+                </div>
+                <!-- Afundo -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🚶</div>
+                    <span class="muscle-group">PERNAS</span>
+                    <div class="exercise-name">Afundo Caminhando</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x10 cada perna</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Elevação Quadril -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🍑</div>
+                    <span class="muscle-group">PERNAS</span>
+                    <div class="exercise-name">Elevação de Quadril</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15-20</div>
+                        <div class="exercise-notes">
+                            Com mini band<br>
+                            Pausa de 2seg no topo
+                        </div>
+                    </div>
+                </div>
+                <!-- Roda Abdominal -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⚙️</div>
+                    <span class="muscle-group">ABDÔMEN</span>
+                    <div class="exercise-name">Roda Abdominal</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x8-12</div>
+                        <div class="exercise-notes">
+                            Se fácil de joelhos, tente em pé na parede
+                        </div>
+                    </div>
+                </div>
+                <!-- Prancha -->
+                <div class="exercise-card">
+                    <div class="exercise-image">📏</div>
+                    <span class="muscle-group">ABDÔMEN</span>
+                    <div class="exercise-name">Prancha com Mini Band</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">2x45-60seg</div>
+                        <div class="exercise-notes">
+                            Manter posição estável
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-controls">
+            <button class="control-btn" onclick="moveCarousel('seg', -1)">← Anterior</button>
+            <button class="control-btn" onclick="moveCarousel('seg', 1)">Próximo →</button>
+        </div>
+        <div class="progress-text"><span id="progress-seg">1 de 12</span></div>
+        <div class="indicators" id="indicators-seg"></div>
+    </div>
 
-    <!-- CAPÍTULO 1 -->
-    <section class="capitulo">
-      <h2>1. A carta sem remetente</h2>
-      <p>A primeira coisa que chegou naquela manhã foi o silêncio. Depois, o envelope.</p>
-      <p>O carteiro ergueu o rosto como quem pede desculpa e disse: “Não pesa nada, mas não é leve.” Afonso — restaurador de relíquias e colecionador de ruídos antigos — recebeu a carta com as duas mãos. O papel parecia frio, como se tivesse dormido no lado escuro da cidade.</p>
-      <p>Dentro, apenas uma folha com uma frase:</p>
-      <p>“Quando o tempo for você, devolva-me.”</p>
-      <p>A caligrafia era inclinada, atenta, de alguém que sabe escolher as pausas. Afonso sorriu com prudência e guardou a carta na gaveta de objetos duvidosos: uma moeda com duas faces, uma pequena chave sem fechadura, um botão de casaco que nunca caiu de casaco nenhum.</p>
-      <p>Na parede, o relógio herdado do avô marcava 09:17. Era uma peça caprichosa, com ponteiros em forma de pena e um vidro levemente manchado, como se respirasse por dentro. A cada meia hora, soltava um suspiro — pelo menos era assim que Afonso descrevia o som aos amigos, quando ainda tinha amigos para ouvir descrições.</p>
-      <p>Antes do almoço, o relógio parou. 09:17 se tornou uma repetição, um eco achado. Afonso girou a chave de corda, ajeitou o pêndulo, sussurrou uma ameaça doce — nada.</p>
-      <p>No verso da carta, em letra menor, apareceu um rabisco que antes não estava lá:</p>
-      <p>“Considere as falhas como portas.”</p>
-      <div class="navegacao">
-        <button id="prev">Anterior</button>
-        <button id="next">Próximo</button>
-      </div>
-    </section>
+    <!-- QUARTA-FEIRA -->
+    <div class="day-section">
+        <div class="day-header">
+            <div class="day-number">QUA</div>
+            <div class="day-info">
+                <h2>Quarta-Feira</h2>
+                <p>Ênfase: Costas/Posterior</p>
+            </div>
+        </div>
+        <div class="carousel-container">
+            <div class="carousel" id="carousel-qua">
+                <!-- Pulldown -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⬇️</div>
+                    <span class="muscle-group">COSTAS</span>
+                    <div class="exercise-name">Pulldown com Elástico</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x10-12</div>
+                        <div class="exercise-notes">
+                            Maior volume hoje
+                        </div>
+                    </div>
+                </div>
+                <!-- Remada Alta -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⬆️</div>
+                    <span class="muscle-group">COSTAS</span>
+                    <div class="exercise-name">Remada Alta</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x12</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Remada Unilateral -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🔄</div>
+                    <span class="muscle-group">COSTAS</span>
+                    <div class="exercise-name">Remada Unilateral</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12 cada braço</div>
+                        <div class="exercise-notes">
+                            Isométrica no final
+                        </div>
+                    </div>
+                </div>
+                <!-- Pullover -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🔽</div>
+                    <span class="muscle-group">COSTAS</span>
+                    <div class="exercise-name">Pullover</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Supino Inclinado -->
+                <div class="exercise-card">
+                    <div class="exercise-image">📐</div>
+                    <span class="muscle-group">PEITO</span>
+                    <div class="exercise-name">Supino Inclinado</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12-15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Flexão Mini Band -->
+                <div class="exercise-card">
+                    <div class="exercise-image">💥</div>
+                    <span class="muscle-group">PEITO</span>
+                    <div class="exercise-name">Flexão com Mini Band</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x máximo</div>
+                        <div class="exercise-notes">
+                            Mini band nos pulsos
+                        </div>
+                    </div>
+                </div>
+                <!-- Elevação Lateral -->
+                <div class="exercise-card">
+                    <div class="exercise-image">↔️</div>
+                    <span class="muscle-group">OMBROS</span>
+                    <div class="exercise-name">Elevação Lateral</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12-15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Crucifixo Inverso -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🔙</div>
+                    <span class="muscle-group">OMBROS</span>
+                    <div class="exercise-name">Crucifixo Inverso</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15</div>
+                        <div class="exercise-notes">
+                            Ombro posterior
+                        </div>
+                    </div>
+                </div>
+                <!-- Stiff -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🏋️</div>
+                    <span class="muscle-group">PERNAS</span>
+                    <div class="exercise-name">Stiff</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x12-15</div>
+                        <div class="exercise-notes">
+                            Pernas retas com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Agachamento Sumô -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🦵</div>
+                    <span class="muscle-group">GLÚTEOS</span>
+                    <div class="exercise-name">Agachamento Sumô</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15-20</div>
+                        <div class="exercise-notes">
+                            Com mini band
+                        </div>
+                    </div>
+                </div>
+                <!-- Abdução Lateral -->
+                <div class="exercise-card">
+                    <div class="exercise-image">➡️</div>
+                    <span class="muscle-group">GLÚTEOS</span>
+                    <div class="exercise-name">Abdução Lateral</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15 cada</div>
+                        <div class="exercise-notes">
+                            Em pé com tira tornozelo
+                        </div>
+                    </div>
+                </div>
+                <!-- Coice -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🦵</div>
+                    <span class="muscle-group">GLÚTEOS</span>
+                    <div class="exercise-name">Coice</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12 cada</div>
+                        <div class="exercise-notes">
+                            Tira tornozelo + elástico<br>
+                            Segure 1seg no topo
+                        </div>
+                    </div>
+                </div>
+                <!-- Abdominal Bicicleta -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🚴</div>
+                    <span class="muscle-group">ABDÔMEN</span>
+                    <div class="exercise-name">Abdominal Bicicleta</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x20-25</div>
+                        <div class="exercise-notes">
+                            Movimento controlado
+                        </div>
+                    </div>
+                </div>
+                <!-- Abdominal Canivete -->
+                <div class="exercise-card">
+                    <div class="exercise-image">✂️</div>
+                    <span class="muscle-group">ABDÔMEN</span>
+                    <div class="exercise-name">Abdominal Canivete</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15-20</div>
+                        <div class="exercise-notes">
+                            Movimento controlado
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-controls">
+            <button class="control-btn" onclick="moveCarousel('sex', -1)">← Anterior</button>
+            <button class="control-btn" onclick="moveCarousel('sex', 1)">Próximo →</button>
+        </div>
+        <div class="progress-text"><span id="progress-sex">1 de 15</span></div>
+        <div class="indicators" id="indicators-sex"></div>
+    </div>
 
-    <!-- CAPÍTULO 2 -->
-    <section class="capitulo">
-      <h2>2. Três batidas na madeira</h2>
-      <p>Nessa noite, a casa parecia um palco abandonado. As janelas rangiam frases velhas. Afonso abriu a gaveta, retirou a carta, a chave inútil e, por impulso, o botão. Colocou os três itens sobre a mesa, ao lado do relógio paralisado.</p>
-      <p>Às 03:03, o silêncio foi substituído por três batidas na madeira. Não na porta, não na janela. No tampo da mesa.</p>
-      <p><em>Tok. Tok. Tok.</em></p>
-      <p>Os objetos vibraram levemente, como se tivessem lembrado um nome. A mesma caligrafia apareceu no vidro do relógio, embaçando por dentro: “Entre pelos minutos.”</p>
-      <p>Afonso pegou uma lupa. Entre os numerais, um delicado risco dividia o 12 e o 1, como uma costura de luz. A chave sem fechadura coube exatamente ali — um gesto improvável, a precisão dos absurdos. Quando a girou, o ponteiro dos minutos tremeu, errou o caminho que aprendera e apontou para baixo, como se indicasse um degrau.</p>
-      <p>A casa cheirou a poeira recente. O ar ficou espesso, e um ruído de folhas viradas preencheu a sala. Afonso viu — não com os olhos de agora, mas com a lembrança dos olhos do avô — a cena de uma oficina antiga: mãos, óleo, o relógio ainda jovem. O avô dizia: “Relógios não contam horas. Escrevem horas.”</p>
-      <p>A frase voltou inteira. A caligrafia no vidro acrescentou outra linha:</p>
-      <p>“Se quer resposta, seja pergunta.”</p>
-      <p>Afonso respirou o bastante para errar. E errou com capricho.</p>
-      <p>Encaixou o botão onde faltava um pino do pêndulo, prendeu a carta entre o vidro e o mostrador, como quem devolve um segredo à vitrine, e tocou a madeira três vezes.</p>
-      <p><em>Tok. Tok. Tok.</em></p>
-      <p>O relógio recomeçou. Não em 09:18, como seria razoável, mas em 01:00. O som do tic-tac veio com um sotaque estranho, como se tivesse aprendido a falar noutro lugar. E cada vez que o ponteiro dos minutos avançava, palavras se formavam no vidro, aparecendo e sumindo como vapor:</p>
-      <p>“Lembre-se da sala sem janela.”<br>
-      “Abandone o corredor que volta.”<br>
-      “Procure o ruído que não teme o eco.”</p>
-      <p>Afonso entendeu pouco, mas a história parecia ter decidido que ele entendeu o suficiente.</p>
-      <div class="navegacao">
-        <button id="prev">Anterior</button>
-        <button id="next">Próximo</button>
-      </div>
-    </section>
 
-    <!-- CAPÍTULO 3 -->
-    <section class="capitulo">
-      <h2>3. O relógio que escrevia tempo</h2>
-      <p>Os dias seguintes não obedeceram aos dias. Em certas tardes, a xícara soltava vapor antes da água ferver. Em certas manhãs, a sombra da estante chegava antes da luz da janela. Às 09:17 — sempre esse número — o relógio parava por um segundo e, nesse segundo, a casa parecia ouvir-se.</p>
-      <p>Afonso percebeu que o relógio escrevia no vidro não apenas frases, mas direções. Ele passou a copiá-las num caderno de capa azul e a segui-las com uma disciplina de quem não confia no próprio improviso.</p>
-      <p>Foi assim que chegou à sala sem janela: um quarto estreito, escondido atrás da biblioteca, que ele juraria não existir. A parede tinha a textura dos livros que se recusam a acabar. No centro, uma mesa baixa, com uma gaveta aberta. Dentro, o mesmo envelope, antes de chegar, dormindo um passado intacto.</p>
-      <p>O papel repetia a frase: “Quando o tempo for você, devolva-me.”</p>
-      <p>— E como se devolve o que só me empresta? — perguntou em voz alta.</p>
-      <p>O relógio respondeu do corredor: três batidas na madeira, três vezes.</p>
-      <p><em>Tok. Tok. Tok.</em></p>
-      <p>A caligrafia apareceu na superfície da mesa, sem tinta, como se a madeira lembrasse o caminho do risco:</p>
-      <p>“Diga o que não cabe em palavra.”</p>
-      <p>Afonso fechou a gaveta e voltou à sala principal. O relógio marcava 07:52, embora o sol tivesse decidido ser 16:00. Ele pousou as mãos no vidro, sentiu a frieza que não era do vidro, mas do antes do vidro. E disse:</p>
-      <p>— Volta.</p>
-      <p>O ponteiro dos minutos andou para trás com elegância de peixe. As vozes do corredor pareceram desfalar-se. Um cheiro de chuva antiga visitou o tapete. O relógio escreveu:</p>
-      <p>“Agora você me toca.”</p>
-      <p>O pêndulo cessou como quem respira fundo. O tique substituiu o taque, e a casa ficou com uma metade do som. No meio dessa ausência, Afonso ouviu os passos do avô atravessando um domingo que já não existia.</p>
-      <p>— Você demorou — disse o avô, sem boca, sem corpo, apenas a certeza de ter dito.</p>
-      <p>— O tempo não deixava — respondeu Afonso, que nunca tivera talento para respostas boas.</p>
-      <p>— O tempo não manda. Pede.</p>
-      <p>A caligrafia no vidro inclinou-se outra vez:</p>
-      <p>“Devolva-me quando souber pedir.”</p>
-      <p>Afonso separou a carta do mostrador, alisou o papel com delicadeza de quem escuta com as mãos e escreveu ao lado da frase original: “Volta.” Dobrou o envelope e, sem conseguir explicar a coragem, inseriu-o outra vez no risco entre o 12 e o 1. Girou a chave.</p>
-      <p>O relógio apagou — não a luz, mas a evidência de si. A madeira retomou a cor de árvore viva, e os numerais se recolheram ao canto da sala, tímidos. Afonso ficou olhando um retângulo de parede onde um relógio não era mais.</p>
-      <p>O carteiro bateu à porta.</p>
-      <p>— Entrega para o senhor Afonso.</p>
-      <p>No envelope, seu nome, sua letra, a data de ontem. Dentro, uma folha em branco que, ao toque, ficou morna. A mão dele, sem consultar o resto, escreveu sozinha:</p>
-      <p>“Quando você for o tempo, devolvo-me.”</p>
-      <p>Assinou com uma sigla que não reconheceu. E ainda assim era sua.</p>
-      <p>A casa respirou. No silêncio que veio, três batidas discretas atravessaram o rodapé do mundo.</p>
-      <p><em>Tok. Tok. Tok.</em></p>
-      <p>Na mesa, o caderno de capa azul fechou-se devagar, como se alguém tivesse terminado de ler.</p>
-      <p>E o relógio, que já não estava, escreveu onde não havia vidro:</p>
-      <p>“Continua.”</p
-      <div class="navegacao">
-        <button id="prev">Anterior</button>
-      </div>
-    </section>
-  </main>
+    <!-- SEXTA-FEIRA -->
+    <div class="day-section">
+        <div class="day-header">
+            <div class="day-number">SEX</div>
+            <div class="day-info">
+                <h2>Sexta-Feira</h2>
+                <p>Ênfase: Ombros/Glúteos</p>
+            </div>
+        </div>
+        <div class="carousel-container">
+            <div class="carousel" id="carousel-sex">
+                <!-- Desenvolvimento -->
+                <div class="exercise-card">
+                    <div class="exercise-image">💪</div>
+                    <span class="muscle-group">OMBROS</span>
+                    <div class="exercise-name">Desenvolvimento</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x10-12</div>
+                        <div class="exercise-notes">
+                            Com elástico - maior volume hoje
+                        </div>
+                    </div>
+                </div>
+                <!-- Elevação Lateral -->
+                <div class="exercise-card">
+                    <div class="exercise-image">↔️</div>
+                    <span class="muscle-group">OMBROS</span>
+                    <div class="exercise-name">Elevação Lateral</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x12-15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Elevação Frontal -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⬆️</div>
+                    <span class="muscle-group">OMBROS</span>
+                    <div class="exercise-name">Elevação Frontal Alternada</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12 cada</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Remada Alta -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⬆️</div>
+                    <span class="muscle-group">OMBROS</span>
+                    <div class="exercise-name">Remada Alta</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Supino -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🏋️</div>
+                    <span class="muscle-group">PEITO</span>
+                    <div class="exercise-name">Supino com Elástico</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12-15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Crucifixo -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🦅</div>
+                    <span class="muscle-group">PEITO</span>
+                    <div class="exercise-name">Crucifixo</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Remada Curvada -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🚣</div>
+                    <span class="muscle-group">COSTAS</span>
+                    <div class="exercise-name">Remada Curvada</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12-15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Pulldown -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⬇️</div>
+                    <span class="muscle-group">COSTAS</span>
+                    <div class="exercise-name">Pulldown</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12-15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Elevação Quadril -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🍑</div>
+                    <span class="muscle-group">GLÚTEOS</span>
+                    <div class="exercise-name">Elevação de Quadril</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x20</div>
+                        <div class="exercise-notes">
+                            Ponte com mini band<br>
+                            Pausa 3seg no topo na última série
+                        </div>
+                    </div>
+                </div>
+                <!-- Agachamento Búlgaro -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🦵</div>
+                    <span class="muscle-group">GLÚTEOS</span>
+                    <div class="exercise-name">Agachamento Búlgaro</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x10-12 cada</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Coice Glúteo -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🦵</div>
+                    <span class="muscle-group">GLÚTEOS</span>
+                    <div class="exercise-name">Coice de Glúteo</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15 cada</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Agachamento Mini Band -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🦵</div>
+                    <span class="muscle-group">PERNAS</span>
+                    <div class="exercise-name">Agachamento</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15-20</div>
+                        <div class="exercise-notes">
+                            Com mini band
+                        </div>
+                    </div>
+                </div>
+                <!-- Abdução Deitado -->
+                <div class="exercise-card">
+                    <div class="exercise-image">↔️</div>
+                    <span class="muscle-group">GLÚTEOS</span>
+                    <div class="exercise-name">Abdução Deitado</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x20 cada</div>
+                        <div class="exercise-notes">
+                            Deitado de lado
+                        </div>
+                    </div>
+                </div>
+                <!-- Roda Abdominal -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⚙️</div>
+                    <span class="muscle-group">ABDÔMEN</span>
+                    <div class="exercise-name">Roda Abdominal</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x10-15</div>
+                        <div class="exercise-notes">
+                            Movimento controlado
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-controls">
+            <button class="control-btn" onclick="moveCarousel('sex', -1)">← Anterior</button>
+            <button class="control-btn" onclick="moveCarousel('sex', 1)">Próximo →</button>
+        </div>
+        <div class="progress-text"><span id="progress-sex">1 de 15</span></div>
+        <div class="indicators" id="indicators-sex"></div>
+    </div>
+  
+    <!-- SÁBADO -->
+    <div class="day-section">
+        <div class="day-header">
+            <div class="day-number">SÁB</div>
+            <div class="day-info">
+                <h2>Sábado</h2>
+                <p>Ênfase: Braços/Quadríceps</p>
+            </div>
+        </div>
+        <div class="carousel-container">
+            <div class="carousel" id="carousel-sab">
+                <!-- Rosca Direta -->
+                <div class="exercise-card">
+                    <div class="exercise-image">💪</div>
+                    <span class="muscle-group">BRAÇOS</span>
+                    <div class="exercise-name">Rosca Direta</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x10-12</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Tríceps Testa -->
+                <div class="exercise-card">
+                    <div class="exercise-image">💪</div>
+                    <span class="muscle-group">BRAÇOS</span>
+                    <div class="exercise-name">Tríceps Testa</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x10-12</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Rosca Martelo -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🔨</div>
+                    <span class="muscle-group">BRAÇOS</span>
+                    <div class="exercise-name">Rosca Martelo</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Tríceps Kickback -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🔙</div>
+                    <span class="muscle-group">BRAÇOS</span>
+                    <div class="exercise-name">Tríceps Kickback</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15 cada</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Rosca Concentrada -->
+                <div class="exercise-card">
+                    <div class="exercise-image">💪</div>
+                    <span class="muscle-group">BRAÇOS</span>
+                    <div class="exercise-name">Rosca Concentrada</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12 cada</div>
+                        <div class="exercise-notes">
+                            Com elástico<br>
+                            Última série: isométrica 20seg
+                        </div>
+                    </div>
+                </div>
+                <!-- Flexão Explosiva -->
+                <div class="exercise-card">
+                    <div class="exercise-image">💥</div>
+                    <span class="muscle-group">PEITO</span>
+                    <div class="exercise-name">Flexão Explosiva</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x máximo</div>
+                        <div class="exercise-notes">
+                            Com mini band
+                        </div>
+                    </div>
+                </div>
+                <!-- Crucifixo -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🦅</div>
+                    <span class="muscle-group">PEITO</span>
+                    <div class="exercise-name">Crucifixo</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12-15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Remada Alta -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⬆️</div>
+                    <span class="muscle-group">COSTAS</span>
+                    <div class="exercise-name">Remada Alta</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Pulldown -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⬇️</div>
+                    <span class="muscle-group">COSTAS</span>
+                    <div class="exercise-name">Pulldown</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12-15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Elevação Lateral -->
+                <div class="exercise-card">
+                    <div class="exercise-image">↔️</div>
+                    <span class="muscle-group">OMBROS</span>
+                    <div class="exercise-name">Elevação Lateral</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Desenvolvimento -->
+                <div class="exercise-card">
+                    <div class="exercise-image">💪</div>
+                    <span class="muscle-group">OMBROS</span>
+                    <div class="exercise-name">Desenvolvimento</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Agachamento -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🦵</div>
+                    <span class="muscle-group">PERNAS</span>
+                    <div class="exercise-name">Agachamento</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">4x12-15</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Afundo Reverso -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🚶</div>
+                    <span class="muscle-group">PERNAS</span>
+                    <div class="exercise-name">Afundo Reverso</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x12 cada</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Agachamento Sumô -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🦵</div>
+                    <span class="muscle-group">PERNAS</span>
+                    <div class="exercise-name">Agachamento Sumô</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x20</div>
+                        <div class="exercise-notes">
+                            Com elástico
+                        </div>
+                    </div>
+                </div>
+                <!-- Elevação Quadril -->
+                <div class="exercise-card">
+                    <div class="exercise-image">🍑</div>
+                    <span class="muscle-group">PERNAS</span>
+                    <div class="exercise-name">Elevação de Quadril</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x15-20</div>
+                        <div class="exercise-notes">
+                            Com mini band
+                        </div>
+                    </div>
+                </div>
+                <!-- Prancha Movimentos -->
+                <div class="exercise-card">
+                    <div class="exercise-image">📏</div>
+                    <span class="muscle-group">ABDÔMEN</span>
+                    <div class="exercise-name">Prancha com Movimentos</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x45seg</div>
+                        <div class="exercise-notes">
+                            Manter posição estável
+                        </div>
+                    </div>
+                </div>
+                <!-- Mountain Climbers -->
+                <div class="exercise-card">
+                    <div class="exercise-image">⛰️</div>
+                    <span class="muscle-group">ABDÔMEN</span>
+                    <div class="exercise-name">Mountain Climbers</div>
+                    <div class="exercise-details">
+                        <div class="sets-reps">3x20</div>
+                        <div class="exercise-notes">
+                            Com mini band
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-controls">
+            <button class="control-btn" onclick="moveCarousel('sab', -1)">← Anterior</button>
+            <button class="control-btn" onclick="moveCarousel('sab', 1)">Próximo →</button>
+        </div>
+        <div class="progress-text"><span id="progress-sab">1 de 17</span></div>
+        <div class="indicators" id="indicators-sab"></div>
+    </div>
 
-  <script>
-    const capitulos = document.querySelectorAll('.capitulo');
-    const sumarioLinks = document.querySelectorAll('.sumario li');
-    let indice = 0;
+    <script>
+        const carousels = {
+            seg: { current: 0, total: 12 },
+            qua: { current: 0, total: 14 },
+            sex: { current: 0, total: 15 },
+            sab: { current: 0, total: 17 }
+        };
 
-    function mostrarCapitulo(n) {
-      capitulos.forEach(c => c.classList.remove('ativo'));
-      capitulos[n].classList.add('ativo');
-      indice = n;
-      window.scrollTo({ top: 0, behavior: "smooth" }); // sempre volta pro topo
-    }
-
-    document.body.addEventListener('click', e => {
-      if (e.target.id === 'next') {
-        if (indice < capitulos.length - 1) {
-          mostrarCapitulo(indice + 1);
+        function initCarousels() {
+            Object.keys(carousels).forEach(day => {
+                updateCarousel(day);
+                createIndicators(day);
+            });
         }
-      }
-      if (e.target.id === 'prev') {
-        if (indice > 0) {
-          mostrarCapitulo(indice - 1);
-        }
-      }
-    });
 
-    sumarioLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mostrarCapitulo(parseInt(link.dataset.capitulo));
-      });
-    });
-  </script>
+        function createIndicators(day) {
+            const container = document.getElementById(`indicators-${day}`);
+            container.innerHTML = '';
+            for (let i = 0; i < carousels[day].total; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator' + (i === 0 ? ' active' : '');
+                indicator.onclick = () => goToSlide(day, i);
+                container.appendChild(indicator);
+            }
+        }
+
+        function moveCarousel(day, direction) {
+            const carousel = carousels[day];
+            carousel.current += direction;
+            
+            if (carousel.current < 0) {
+                carousel.current = carousel.total - 1;
+            } else if (carousel.current >= carousel.total) {
+                carousel.current = 0;
+            }
+            
+            updateCarousel(day);
+        }
+
+        function goToSlide(day, index) {
+            carousels[day].current = index;
+            updateCarousel(day);
+        }
+
+        function updateCarousel(day) {
+            const carousel = document.getElementById(`carousel-${day}`);
+            const offset = -carousels[day].current * 100;
+            carousel.style.transform = `translateX(${offset}%)`;
+            
+            const indicators = document.querySelectorAll(`#indicators-${day} .indicator`);
+            indicators.forEach((ind, idx) => {
+                ind.classList.toggle('active', idx === carousels[day].current);
+            });
+            
+            document.getElementById(`progress-${day}`).textContent = 
+                `${carousels[day].current + 1} de ${carousels[day].total}`;
+        }
+
+        initCarousels();
+    </script>
 </body>
-</html>
+</html></div>
+ 
+
